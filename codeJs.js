@@ -76,3 +76,39 @@ button.addEventListener("click", () => {
   // Salva i dati localmente
   localclick();
 });
+// Funzione per salvare i dati localmente
+var arr = [];
+function localclick() {
+  let jsonstring = JSON.stringify(registro.studenti);
+  localStorage.setItem("array", jsonstring);
+}
+
+// Carica i dati locali ricreando la tabella quando la finestra è caricata
+window.onload = getLocal;
+let table = document.getElementById("table");
+function getLocal() {
+  if (localStorage.getItem("array")) {
+    arr.push(JSON.parse(localStorage.getItem("array")));
+    console.log(arr);
+    arr.forEach(function (element) {
+      element.forEach(function (elementdue) {
+        let rowLength = table.rows.length;
+        let newRow = table.insertRow(rowLength);
+        var cell0 = newRow.insertCell(0);
+        var cell1 = newRow.insertCell(1);
+        var cell2 = newRow.insertCell(2);
+        var cell3 = newRow.insertCell(3);
+        var cell4 = newRow.insertCell(4);
+        var cell5 = newRow.insertCell(5);
+        cell0.innerHTML = elementdue.id;
+        cell1.innerHTML = elementdue.nome;
+        cell2.innerHTML = elementdue.cognome;
+        elementdue.voti.forEach(function (elementrue) {
+          cell3.innerHTML = elementrue.voto;
+          cell4.innerHTML = elementrue.commento;
+          cell5.innerHTML = elementrue.data;
+        });
+      });
+    });
+  }
+}
